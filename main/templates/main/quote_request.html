@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="py-20 bg-gradient-to-br from-primary-900 to-primary-800 min-h-screen flex items-center">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto bg-primary-800 rounded-2xl shadow-2xl overflow-hidden border border-metal-500/20">
+            <div class="p-12 lg:p-16">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-accent-500 to-blue-400 text-transparent bg-clip-text mb-4">
+                        Request a Project Quote
+                    </h1>
+                    <p class="text-metal-400 max-w-2xl mx-auto">
+                        Tell us about your project, and our team will craft a tailored solution that meets your unique needs.
+                    </p>
+                </div>
+                
+                <form method="post" enctype="multipart/form-data" class="space-y-8" data-aos="fade-up">
+                    {% csrf_token %}
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="relative group">
+                            <input 
+                                type="text" 
+                                name="name" 
+                                id="name" 
+                                required 
+                                class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                                       focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                                       transition duration-300 ease-in-out"
+                                placeholder=" "
+                            >
+                            <label for="name" class="absolute left-4 top-0 text-metal-400 
+                                   transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+                                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+                                   peer-placeholder-shown:text-metal-500 
+                                   peer-focus:top-0 peer-focus:text-xs 
+                                   peer-focus:text-accent-500 transition-all duration-300">
+                                Full Name
+                            </label>
+                        </div>
+                        
+                        <div class="relative group">
+                            <input 
+                                type="email" 
+                                name="email" 
+                                id="email" 
+                                required 
+                                class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                                       focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                                       transition duration-300 ease-in-out"
+                                placeholder=" "
+                            >
+                            <label for="email" class="absolute left-4 top-0 text-metal-400 
+                                   transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+                                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+                                   peer-placeholder-shown:text-metal-500 
+                                   peer-focus:top-0 peer-focus:text-xs 
+                                   peer-focus:text-accent-500 transition-all duration-300">
+                                Email Address
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="relative group">
+                            <input 
+                                type="tel" 
+                                name="phone" 
+                                id="phone" 
+                                class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                                       focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                                       transition duration-300 ease-in-out"
+                                placeholder=" "
+                            >
+                            <label for="phone" class="absolute left-4 top-0 text-metal-400 
+                                   transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+                                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+                                   peer-placeholder-shown:text-metal-500 
+                                   peer-focus:top-0 peer-focus:text-xs 
+                                   peer-focus:text-accent-500 transition-all duration-300">
+                                Phone Number
+                            </label>
+                        </div>
+                        
+                        <div class="relative group">
+                            <select 
+                                name="service" 
+                                id="service" 
+                                required 
+                                class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                                       focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                                       transition duration-300 ease-in-out appearance-none"
+                            >
+                                <option value="">Select Service</option>
+                                <option value="custom_fabrication">Custom Fabrication</option>
+                                <option value="tig_welding">TIG Welding</option>
+                                <option value="mig_welding">MIG Welding</option>
+                                <option value="metal_repair">Metal Repairs</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-metal-400">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                </svg>
+                            </div>
+                            <label for="service" class="absolute left-4 top-0 text-metal-400 
+                                   transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+                                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+                                   peer-placeholder-shown:text-metal-500 
+                                   peer-focus:top-0 peer-focus:text-xs 
+                                   peer-focus:text-accent-500 transition-all duration-300">
+                                Service Type
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group">
+                        <textarea 
+                            name="project_description" 
+                            id="project_description" 
+                            rows="4" 
+                            required 
+                            class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                                   focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                                   transition duration-300 ease-in-out resize-none"
+                            placeholder=" "
+                        ></textarea>
+                        <label for="project_description" class="absolute left-4 top-0 text-metal-400 
+                               transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+                               peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+                               peer-placeholder-shown:text-metal-500 
+                               peer-focus:top-0 peer-focus:text-xs 
+                               peer-focus:text-accent-500 transition-all duration-300">
+                            Project Description
+                        </label>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="relative group">
+                            <select 
+                                name="budget_range" 
+                                id="budget_range" 
+                                required 
+                                class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                                       focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                                       transition duration-300 ease-in-out appearance-none"
+                            >
+                                <option value="">Select Budget Range</option>
+                                <option value="under_1000">Under $1,000</option>
+                                <option value="1000_5000">$1,000 - $5,000</option>
+                                <option value="5000_10000">$5,000 - $10,000</option>
+                                <option value="over_10000">Over $10,000</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-metal-400">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                </svg>
+                            </div>
+                            <label for="budget_range" class="absolute left-4 top-0 text-metal-400 
+                                   transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+                                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+                                   peer-placeholder-shown:text-metal-500 
+                                   peer-focus:top-0 peer-focus:text-xs 
+                                   peer-focus:text-accent-500 transition-all duration-300">
+                                Budget Range
+                            </label>
+                        </div>
+                        
+                        <div class="relative group">
+                            <select 
+                                name="timeline" 
+                                id="timeline" 
+                                required 
+                                class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                                       focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                                       transition duration-300 ease-in-out appearance-none"
+                            >
+                                <option value="">Select Timeline</option>
+                                <option value="urgent">Urgent (Within a week)</option>
+                                <option value="normal">Normal (2-4 weeks)</option>
+                                <option value="flexible">Flexible (1-3 months)</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-metal-400">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                </svg>
+                            </div>
+                            <label for="timeline" class="absolute left-4 top-0 text-metal-400 
+                                   transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+                                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+                                   peer-placeholder-shown:text-metal-500 
+                                   peer-focus:top-0 peer-focus:text-xs 
+                                   peer-focus:text-accent-500 transition-all duration-300">
+                                Project Timeline
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group">
+                        <div 
+                            class="flex items-center justify-center w-full border-2 border-dashed border-metal-500/30 rounded-xl p-6 
+                                   hover:border-accent-500 transition duration-300 ease-in-out group"
+                        >
+                            <input 
+                                type="file" 
+                                name="attachments" 
+                                id="attachments" 
+                                multiple 
+                                class="hidden"
+                            >
+                            <label for="attachments" class="cursor-pointer flex flex-col items-center">
+                                <svg class="w-12 h-12 text-metal-400 group-hover:text-accent-500 transition" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="mt-2 text-sm text-metal-400 group-hover:text-accent-500 transition">
+                                    Click to upload project files (optional)
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        type="submit" 
+                        class="w-full bg-gradient-to-r from-accent-500 to-blue-400 text-primary-900 py-4 rounded-full 
+                               font-bold text-lg hover:from-accent-400 hover:to-blue-300 
+                               focus:outline-none focus:ring-4 focus:ring-accent-500/50 
+                               transform hover:scale-[1.02] transition duration-300 ease-in-out"
+                    >
+                        Submit Project Quote Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if messages %}
+<div class="fixed top-4 right-4 z-50">
+    {% for message in messages %}
+    <div class="{% if message.tags == 'success' %}bg-green-500{% else %}bg-red-500{% endif %} text-white px-6 py-4 rounded-xl shadow-lg mb-4">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Floating label and input styles */
+    .peer:focus + label,
+    .peer:not(:placeholder-shown) + label {
+        @apply top-0 text-xs text-accent-500;
+    }
+
+    /* Custom file input styling */
+    input[type="file"]::-webkit-file-upload-button {
+        display: none;
+    }
+
+    /* Animate submit button on hover */
+    @keyframes buttonPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+</style>
+{% endblock %}

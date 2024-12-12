@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="min-h-[80vh] flex items-center">
+    <div class="container mx-auto px-4 text-center">
+        <div class="w-20 h-20 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-8">
+            <i class="fas fa-check text-4xl text-primary-900"></i>
+        </div>
+        <h1 class="text-4xl font-bold mb-4">Quote Request Submitted!</h1>
+        <p class="text-xl text-metal-400 mb-8">Thank you for your interest. Our team will review your request and get back to you within 24 hours.</p>
+        <div class="flex justify-center gap-4">
+            <a href="{% url 'home' %}" class="px-8 py-3 bg-primary-800 rounded-full hover:bg-primary-700 transition duration-300">
+                Return Home
+            </a>
+            <a href="{% url 'portfolio' %}" class="px-8 py-3 bg-accent-500 text-primary-900 rounded-full hover:bg-accent-400 transition duration-300">
+                View Our Work
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
