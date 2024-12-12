@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ settings.site_name }}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            900: '#0A192F', // Deep Navy
+                            800: '#112240',
+                            700: '#1A365D',
+                        },
+                        accent: {
+                            500: '#64FFDA', // Electric Blue
+                            400: '#88FFEB',
+                        },
+                        metal: {
+                            500: '#718096', // Metallic Silver
+                            400: '#A0AEC0',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-primary-900 text-gray-100">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-primary-900/90 backdrop-blur-md border-b border-metal-500/10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="{% url 'home' %}" class="flex items-center space-x-2">
+                    <span class="text-3xl text-accent-500"><i class="fas fa-fire"></i></span>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-accent-500 to-blue-500 text-transparent bg-clip-text">{{ settings.site_name }}</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{% url 'home' %}" class="nav-link group">
+                        Home
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-accent-500"></span>
+                    </a>
+                    <a href="{% url 'services' %}" class="nav-link group">
+                        Services
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-accent-500"></span>
+                    </a>
+                    <a href="{% url 'portfolio' %}" class="nav-link group">
+                        Portfolio
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-accent-500"></span>
+                    </a>
+                    <a href="{% url 'about' %}" class="nav-link group">
+                        About
+                        <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-accent-500"></span>
+                    </a>
+                    <a href="{% url 'contact' %}" class="px-6 py-2 rounded-full border-2 border-accent-500 text-accent-500 hover:bg-accent-500 hover:text-primary-900 transition duration-300">
+                        Contact Us
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-accent-500" id="mobile-menu-button">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-4 py-4 space-y-4 bg-primary-800 border-t border-metal-500/10">
+                <a href="{% url 'home' %}" class="block py-2 text-center hover:text-accent-500 transition duration-300">Home</a>
+                <a href="{% url 'services' %}" class="block py-2 text-center hover:text-accent-500 transition duration-300">Services</a>
+                <a href="{% url 'portfolio' %}" class="block py-2 text-center hover:text-accent-500 transition duration-300">Portfolio</a>
+                <a href="{% url 'about' %}" class="block py-2 text-center hover:text-accent-500 transition duration-300">About</a>
+                <a href="{% url 'contact' %}" class="block py-2 text-center bg-accent-500 text-primary-900 rounded-full">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="min-h-screen pt-20">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary-800 border-t border-metal-500/10">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold text-accent-500">WeldTech Pro</h3>
+                    <p class="text-metal-400">Crafting excellence through precision and innovation in metal fabrication.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-metal-400 hover:text-accent-500 transition"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-metal-400 hover:text-accent-500 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-metal-400 hover:text-accent-500 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-metal-400 hover:text-accent-500 transition"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-metal-400 hover:text-accent-500 transition">Services</a></li>
+                        <li><a href="#" class="text-metal-400 hover:text-accent-500 transition">Projects</a></li>
+                        <li><a href="#" class="text-metal-400 hover:text-accent-500 transition">About Us</a></li>
+                        <li><a href="#" class="text-metal-400 hover:text-accent-500 transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-metal-400 hover:text-accent-500 transition">Custom Fabrication</a></li>
+                        <li><a href="#" class="text-metal-400 hover:text-accent-500 transition">TIG Welding</a></li>
+                        <li><a href="#" class="text-metal-400 hover:text-accent-500 transition">MIG Welding</a></li>
+                        <li><a href="#" class="text-metal-400 hover:text-accent-500 transition">Metal Repairs</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-metal-400">
+                            <i class="fas fa-map-marker-alt w-6"></i>
+                            123 Welding Street, Industrial Area
+                        </li>
+                        <li class="flex items-center text-metal-400">
+                            <i class="fas fa-phone w-6"></i>
+                            +1 234 567 890
+                        </li>
+                        <li class="flex items-center text-metal-400">
+                            <i class="fas fa-envelope w-6"></i>
+                            info@weldtechpro.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-metal-500/10 text-center text-metal-400">
+                <p>&copy; 2024 WeldTech Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <style>
+        @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .animate-fade-in {
+                animation: fadeIn 1s ease-out forwards;
+            }
+
+            .animate-fade-in-delay {
+                animation: fadeIn 1s ease-out 0.5s forwards;
+                opacity: 0;
+            }
+
+    </style>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

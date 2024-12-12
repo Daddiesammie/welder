@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+{% endblock %}
+
+{% block content %}
+<!-- Project Hero -->
+<section class="relative h-[60vh]">
+    {% with primary_image=portfolio.images.first %}
+    {% if primary_image %}
+    <div class="absolute inset-0">
+        <img src="{{ primary_image.image.url }}" alt="{{ portfolio.title }}" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary-900/90 to-primary-800/70"></div>
+    </div>
+    {% endif %}
+    {% endwith %}
+    
+    <div class="relative container mx-auto px-4 h-full flex items-center">
+        <div class="max-w-3xl">
+            <h1 class="text-5xl font-bold mb-4">{{ portfolio.title }}</h1>
+            <div class="flex items-center space-x-4 text-metal-400">
+                <span><i class="fas fa-folder mr-2"></i>{{ portfolio.category|title }}</span>
+                <span><i class="fas fa-user mr-2"></i>{{ portfolio.client }}</span>
+                <span><i class="fas fa-calendar mr-2"></i>{{ portfolio.completion_date|date:"F Y" }}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details -->
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <h2 class="text-3xl font-bold mb-6">Project Overview</h2>
+                <div class="prose prose-invert max-w-none mb-12">
+                    {{ portfolio.description|safe }}
+                </div>
+
+                <!-- Image Gallery -->
+                <div class="swiper project-gallery">
+                    <div class="swiper-wrapper">
+                        {% for image in portfolio.images.all %}
+                        <div class="swiper-slide">
+                            <img src="{{ image.image.url }}" alt="{{ image.caption }}" 
+                                 class="w-full h-[400px] object-cover rounded-xl">
+                            {% if image.caption %}
+                            <p class="mt-2 text-center text-metal-400">{{ image.caption }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-primary-800 rounded-xl p-6">
+                    <h3 class="text-2xl font-bold mb-6">Project Details</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between">
+                            <span class="text-metal-400">Client</span>
+                            <span>{{ portfolio.client }}</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-metal-400">Category</span>
+                            <span>{{ portfolio.category|title }}</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-metal-400">Completion Date</span>
+                            <span>{{ portfolio.completion_date|date:"F j, Y" }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Projects -->
+<section class="py-20 bg-primary-800">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-12">Related Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for project in related_projects %}
+            <a href="{% url 'portfolio_detail' project.slug %}" class="group">
+                <div class="relative overflow-hidden rounded-xl">
+                    {% with project_image=project.images.first %}
+                    {% if project_image %}
+                    <img src="{{ project_image.image.url }}" alt="{{ project.title }}" 
+                         class="w-full h-64 object-cover transition duration-300 group-hover:scale-110">
+                    {% endif %}
+                    {% endwith %}
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary-900 opacity-0 group-hover:opacity-90 transition duration-300">
+                        <div class="absolute bottom-0 p-6">
+                            <h3 class="text-xl font-bold">{{ project.title }}</h3>
+                            <p class="text-metal-400">{{ project.category|title }}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script>
+    new Swiper('.project-gallery', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+        }
+    });
+</script>
+{% endblock %}
