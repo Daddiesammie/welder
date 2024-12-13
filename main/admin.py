@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contact, QuoteRequest, Service, Project, Testimonial
+from .models import Certificate, Contact, QuoteRequest, Service, Project, Testimonial
 from django.contrib import admin
 from .models import SiteSettings, HomePageSection
 from django.contrib import admin
@@ -104,3 +104,7 @@ class ContactAdmin(admin.ModelAdmin):
         if obj:  # Editing an existing object
             return self.readonly_fields + ('name', 'email', 'subject', 'message')
         return self.readonly_fields
+
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = ('name', 'display_order')

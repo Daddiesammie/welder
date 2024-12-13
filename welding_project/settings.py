@@ -146,3 +146,23 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # For development
 DEFAULT_FROM_EMAIL = 'noreply@example.com'
 ADMIN_EMAIL = 'admin@example.com'
+
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'INFO',
+    },
+}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="py-20 bg-gradient-to-br from-primary-900 to-primary-800 min-h-screen">
+    <div class="container mx-auto px-4">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-primary-800 rounded-2xl shadow-2xl border border-metal-500/20 p-8">
+                <h2 class="text-3xl font-bold bg-gradient-to-r from-accent-500 to-blue-400 text-transparent bg-clip-text mb-6">
+                    Quote Status
+                </h2>
+                
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center p-4 bg-primary-900 rounded-xl">
+                        <div>
+                            <p class="text-metal-400">Tracking ID</p>
+                            <p class="text-metal-200 font-semibold">{{ quote.tracking_id }}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-metal-400">Status</p>
+                            <span class="inline-block px-3 py-1 rounded-full text-sm font-medium
+                                {% if quote.status == 'pending' %}bg-yellow-500/20 text-yellow-500
+                                {% elif quote.status == 'in_progress' %}bg-blue-500/20 text-blue-500
+                                {% elif quote.status == 'approved' %}bg-green-500/20 text-green-500
+                                {% elif quote.status == 'declined' %}bg-red-500/20 text-red-500
+                                {% else %}bg-purple-500/20 text-purple-500{% endif %}">
+                                {{ quote.get_status_display }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-metal-200">Project Details</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-metal-400">Service</p>
+                                <p class="text-metal-200">{{ quote.service }}</p>
+                            </div>
+                            <div>
+                                <p class="text-metal-400">Timeline</p>
+                                <p class="text-metal-200">{{ quote.timeline }}</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <p class="text-metal-400">Description</p>
+                            <p class="text-metal-200">{{ quote.project_description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,80 +1,95 @@
 from django.shortcuts import get_object_or_404, render
-from .models import Portfolio, Service, Project, Testimonial
+from .models import Certificate, Portfolio, QuoteRequest, Service, Project, SiteSettings, Testimonial
 from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.contrib import messages
 from django.conf import settings
-from .forms import QuoteRequestForm, ContactForm
+from .forms import ContactForm, QuoteRequestForm
+
+import logging
+logger = logging.getLogger(__name__)
+
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            contact = form.save()
-            
-            # Send email notification
-            context = {
-                'name': form.cleaned_data['name'],
-                'email': form.cleaned_data['email'],
-                'subject': form.cleaned_data['subject'],
-                'message': form.cleaned_data['message']
-            }
-            
             try:
+                contact = form.save()
+                
+                # Prepare HTML email
+                html_message = render_to_string('emails/contact_notification.html', {
+                    'name': contact.name,
+                    'email': contact.email,
+                    'subject': contact.subject,
+                    'message': contact.message,
+                })
+                plain_message = strip_tags(html_message)
+                
+                # Send email
                 send_mail(
-                    subject=f'New Contact Message: {contact.subject}',
-                    message=render_to_string('emails/contact_message.txt', context),
+                    subject=f'New Contact Form Submission: {contact.subject}',
+                    message=plain_message,
+                    html_message=html_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[settings.ADMIN_EMAIL],
-                    fail_silently=False,
                 )
+                
                 messages.success(request, 'Your message has been sent successfully!')
                 return redirect('contact_success')
             except Exception as e:
-                messages.error(request, 'There was an error sending your message. Please try again.')
+                print("Error:", str(e))
+                messages.error(request, 'Error saving your message.')
         else:
-            messages.error(request, 'Please correct the errors below.')
+            messages.error(request, 'Please check your input.')
     else:
         form = ContactForm()
     
     return render(request, 'main/contact.html', {'form': form})
 
+
+
 def quote_request(request):
     if request.method == 'POST':
         form = QuoteRequestForm(request.POST, request.FILES)
         if form.is_valid():
-            quote = form.save()
+            # Save to database first
+            quote_instance = form.save()
             
-            # Send email notification
+            # Prepare email context
             context = {
-                'name': form.cleaned_data['name'],
-                'email': form.cleaned_data['email'],
-                'phone': form.cleaned_data['phone'],
-                'service': form.cleaned_data['service'],
-                'project_description': form.cleaned_data['project_description'],
-                'budget_range': form.cleaned_data['budget_range'],
-                'timeline': form.cleaned_data['timeline']
+                'name': quote_instance.name,
+                'email': quote_instance.email,
+                'phone': quote_instance.phone,
+                'service': quote_instance.service,
+                'project_description': quote_instance.project_description,
+                'budget_range': quote_instance.budget_range,
+                'timeline': quote_instance.timeline
             }
             
+            # Send email
             try:
                 send_mail(
                     subject='New Quote Request',
-                    message=render_to_string('emails/quote_request.txt', context),
+                    message=render_to_string('emails/quote_request.html', context),
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[settings.ADMIN_EMAIL],
-                    fail_silently=False,
                 )
                 messages.success(request, 'Your quote request has been submitted successfully!')
                 return redirect('quote_success')
             except Exception as e:
-                messages.error(request, 'There was an error submitting your request. Please try again.')
-        else:
-            messages.error(request, 'Please correct the errors below.')
+                print(f"Email error: {str(e)}")  # For debugging
+                messages.warning(request, 'Quote request saved but email notification failed.')
+                return redirect('quote_success')
     else:
         form = QuoteRequestForm()
     
     return render(request, 'main/quote_request.html', {'form': form})
+
 
 
 def home(request):
@@ -114,10 +129,12 @@ def portfolio(request):
     return render(request, 'main/portfolio.html', context)
 
 def about(request):
-    return render(request, 'main/about.html')
-
-def contact(request):
-    return render(request, 'main/contact.html')
+    settings = SiteSettings.objects.first()
+    certificates = Certificate.objects.all()
+    return render(request, 'main/about.html', {
+        'settings': settings,
+        'certificates': certificates
+    })
 
 def portfolio_detail(request, slug):
     portfolio = get_object_or_404(Portfolio.objects.prefetch_related('images'), slug=slug)
@@ -134,3 +151,21 @@ def quote_success(request):
 
 def contact_success(request):
     return render(request, 'main/contact_success.html')
+
+
+def track_quote(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        tracking_id = request.POST.get('tracking_id')
+        
+        quote = QuoteRequest.objects.filter(
+            email=email,
+            tracking_id=tracking_id
+        ).first()
+        
+        if quote:
+            return render(request, 'main/track_result.html', {'quote': quote})
+        else:
+            messages.error(request, 'No matching quote request found.')
+    
+    return render(request, 'main/track_quote.html')

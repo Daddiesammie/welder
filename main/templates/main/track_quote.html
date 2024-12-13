@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="py-20 bg-gradient-to-br from-primary-900 to-primary-800 min-h-screen">
+    <div class="container mx-auto px-4">
+        <div class="max-w-md mx-auto">
+            <div class="bg-primary-800 rounded-2xl shadow-2xl border border-metal-500/20 p-8">
+                <h2 class="text-3xl font-bold bg-gradient-to-r from-accent-500 to-blue-400 text-transparent bg-clip-text mb-6">
+                    Track Your Quote
+                </h2>
+                
+                <form method="post" class="space-y-6">
+                    {% csrf_token %}
+                    <div class="space-y-2">
+                        <label class="text-metal-300">Email Address</label>
+                        <input type="email" name="email" required 
+                               class="w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3">
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="text-metal-300">Tracking ID</label>
+                        <input type="text" name="tracking_id" required 
+                               class="w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3">
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-accent-500 to-blue-400 text-primary-900 py-3 rounded-xl font-bold">
+                        Track Status
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

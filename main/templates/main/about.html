@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative py-20 bg-gradient-to-b from-primary-900 to-primary-800">
+    <div class="container mx-auto px-4">
+        <div class="text-center max-w-3xl mx-auto">
+            <h1 class="text-5xl font-bold text-white mb-6">{{ settings.about_title }}</h1>
+            <div class="w-24 h-1 bg-accent-500 mx-auto mb-8"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- About Image -->
+            <div class="relative">
+                <img 
+                    src="{{ settings.about_image.url }}" 
+                    alt="About Us" 
+                    class="rounded-2xl shadow-2xl w-full"
+                >
+                <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-accent-500 rounded-2xl -z-10"></div>
+            </div>
+            
+            <!-- About Content -->
+            <div class="prose prose-lg max-w-none">
+                {{ settings.about_content|safe }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-20 bg-primary-900 text-white">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-4xl font-bold text-accent-500 mb-2">25+</div>
+                <div class="text-lg">Years Experience</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold text-accent-500 mb-2">500+</div>
+                <div class="text-lg">Projects Completed</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold text-accent-500 mb-2">100%</div>
+                <div class="text-lg">Client Satisfaction</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold text-accent-500 mb-2">50+</div>
+                <div class="text-lg">Team Members</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Team Values -->
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-8">
+                <div class="text-accent-500 mb-4">
+                    <i class="fas fa-medal text-5xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Quality First</h3>
+                <p class="text-gray-600">We never compromise on quality, ensuring every weld meets the highest standards.</p>
+            </div>
+            <div class="text-center p-8">
+                <div class="text-accent-500 mb-4">
+                    <i class="fas fa-users text-5xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Expert Team</h3>
+                <p class="text-gray-600">Our certified welders bring decades of combined experience to every project.</p>
+            </div>
+            <div class="text-center p-8">
+                <div class="text-accent-500 mb-4">
+                    <i class="fas fa-clock text-5xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Timely Delivery</h3>
+                <p class="text-gray-600">We respect deadlines and deliver projects on time, every time.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Certifications Section -->
+<section class="py-24 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">Our Certifications</h2>
+            <div class="w-24 h-1 bg-red-600 mx-auto"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for certificate in certificates %}
+            <div class="group cursor-pointer">
+                <div class="relative overflow-hidden rounded-lg shadow-lg">
+                    <!-- Certificate Image -->
+                    <img 
+                        src="{{ certificate.image.url }}" 
+                        alt="{{ certificate.name }}" 
+                        class="w-full h-auto transform transition-transform duration-500 group-hover:scale-110"
+                    >
+                    
+                    <!-- Hover Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">{{ certificate.name }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

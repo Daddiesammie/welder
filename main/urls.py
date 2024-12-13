@@ -11,4 +11,6 @@ urlpatterns = [
     path('quote-success/', views.quote_success, name='quote_success'),
     path('contact/', views.contact, name='contact'),
     path('contact-success/', views.contact_success, name='contact_success'),
+    path('track/', views.track_quote, name='track_quote'),
+
 ]
