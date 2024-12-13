@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+import uuid
 
 class Service(models.Model):
     ICON_CHOICES = [

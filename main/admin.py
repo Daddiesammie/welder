@@ -81,17 +81,27 @@ class TestimonialAdmin(admin.ModelAdmin):
 
 @admin.register(QuoteRequest)
 class QuoteRequestAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'service', 'status', 'created_at')
-    list_filter = ('status', 'service', 'created_at')
-    search_fields = ('name', 'email', 'project_description')
-    readonly_fields = ('created_at',)
+    list_display = ['tracking_id', 'name', 'email', 'service', 'status', 'status_updated_at']
+    list_filter = ['status', 'service']
+    search_fields = ['tracking_id', 'name', 'email']
+    readonly_fields = ['tracking_id', 'status_updated_at']
     
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('tracking_id', 'name', 'email', 'phone')
+        }),
+        ('Project Details', {
+            'fields': ('service', 'project_description', 'budget_range', 'timeline')
+        }),
+        ('Status Information', {
+            'fields': ('status',)
+        }),
+    )
+
     def get_readonly_fields(self, request, obj=None):
-        if obj:  # Editing an existing object
-            return self.readonly_fields + ('name', 'email', 'phone', 'service', 
-                                         'project_description', 'budget_range', 
-                                         'timeline', 'attachments')
-        return self.readonly_fields
+        if obj:  # editing an existing object
+            return self.readonly_fields
+        return ['tracking_id', 'status_updated_at']
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):

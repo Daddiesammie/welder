@@ -6,13 +6,25 @@
         <div class="w-20 h-20 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-8">
             <i class="fas fa-check text-4xl text-primary-900"></i>
         </div>
+
         <h1 class="text-4xl font-bold mb-4">Quote Request Submitted!</h1>
+        
+        <div class="max-w-md mx-auto bg-primary-800/50 rounded-xl p-6 mb-8 border border-accent-500/20">
+            <p class="text-lg text-metal-300 mb-4">Your Tracking ID:</p>
+            <div class="text-2xl font-mono font-bold text-accent-500 mb-4">{{ quote.tracking_id }}</div>
+            <p class="text-sm text-metal-400">Please save this tracking ID. You'll need it to check your quote status.</p>
+        </div>
+
         <p class="text-xl text-metal-400 mb-8">Thank you for your interest. Our team will review your request and get back to you within 24 hours.</p>
-        <div class="flex justify-center gap-4">
+
+        <div class="flex justify-center gap-4 flex-wrap">
             <a href="{% url 'home' %}" class="px-8 py-3 bg-primary-800 rounded-full hover:bg-primary-700 transition duration-300">
                 Return Home
             </a>
-            <a href="{% url 'portfolio' %}" class="px-8 py-3 bg-accent-500 text-primary-900 rounded-full hover:bg-accent-400 transition duration-300">
+            <a href="{% url 'track_quote' %}" class="px-8 py-3 bg-accent-500 text-primary-900 rounded-full hover:bg-accent-400 transition duration-300">
+                Track Your Quote
+            </a>
+            <a href="{% url 'portfolio' %}" class="px-8 py-3 bg-primary-800 rounded-full hover:bg-primary-700 transition duration-300">
                 View Our Work
             </a>
         </div>

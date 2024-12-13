@@ -68,27 +68,33 @@ def quote_request(request):
                 'service': quote_instance.service,
                 'project_description': quote_instance.project_description,
                 'budget_range': quote_instance.budget_range,
-                'timeline': quote_instance.timeline
+                'timeline': quote_instance.timeline,
+                'tracking_id': quote_instance.tracking_id
             }
             
             # Send email
             try:
+                html_message = render_to_string('emails/quote_request.html', context)
+                plain_message = strip_tags(html_message)
+                
                 send_mail(
                     subject='New Quote Request',
-                    message=render_to_string('emails/quote_request.html', context),
+                    message=plain_message,
+                    html_message=html_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[settings.ADMIN_EMAIL],
                 )
                 messages.success(request, 'Your quote request has been submitted successfully!')
-                return redirect('quote_success')
+                return render(request, 'main/quote_success.html', {'quote': quote_instance})
             except Exception as e:
                 print(f"Email error: {str(e)}")  # For debugging
                 messages.warning(request, 'Quote request saved but email notification failed.')
-                return redirect('quote_success')
+                return render(request, 'main/quote_success.html', {'quote': quote_instance})
     else:
         form = QuoteRequestForm()
     
     return render(request, 'main/quote_request.html', {'form': form})
+
 
 
 
