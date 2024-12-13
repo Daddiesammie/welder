@@ -160,10 +160,11 @@ class PortfolioImage(models.Model):
 
 class QuoteRequest(models.Model):
     STATUS_CHOICES = [
-        ('pending', 'Pending'),
+        ('pending', 'Pending Review'),
         ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('declined', 'Declined')
+        ('approved', 'Quote Approved'),
+        ('declined', 'Quote Declined'),
+        ('completed', 'Project Completed')
     ]
     
     name = models.CharField(max_length=200)
@@ -176,6 +177,14 @@ class QuoteRequest(models.Model):
     attachments = models.FileField(upload_to='quotes/attachments/', blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    tracking_id = models.CharField(max_length=12, unique=True, editable=False, null=True)
+    status_updated_at = models.DateTimeField(auto_now=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.tracking_id:
+            self.tracking_id = f'WTP-{uuid.uuid4().hex[:8].upper()}'
+        super().save(*args, **kwargs)
     
     def __str__(self):
         return f"Quote Request from {self.name}"
@@ -190,3 +199,14 @@ class Contact(models.Model):
     
     def __str__(self):
         return f"Message from {self.name}: {self.subject}"
+    
+class Certificate(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='certificates/')
+    display_order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['display_order']
+
+    def __str__(self):
+        return self.name

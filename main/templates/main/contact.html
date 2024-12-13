@@ -14,105 +14,107 @@
                     </p>
                 </div>
                 
-                <form method="post" class="space-y-8" enctype="multipart/form-data" data-aos="fade-up">
-                    {% csrf_token %}
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="relative group">
-                            <input 
-                                type="text" 
-                                name="name" 
-                                id="name" 
-                                required 
-                                class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
-                                       focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
-                                       transition duration-300 ease-in-out"
-                                placeholder=" "
-                            >
-                            <label for="name" class="absolute left-4 top-0 text-metal-400 
-                                   transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
-                                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
-                                   peer-placeholder-shown:text-metal-500 
-                                   peer-focus:top-0 peer-focus:text-xs 
-                                   peer-focus:text-accent-500 transition-all duration-300">
-                                Full Name
-                            </label>
-                        </div>
-                        
-                        <div class="relative group">
-                            <input 
-                                type="email" 
-                                name="email" 
-                                id="email" 
-                                required 
-                                class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
-                                       focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
-                                       transition duration-300 ease-in-out"
-                                placeholder=" "
-                            >
-                            <label for="email" class="absolute left-4 top-0 text-metal-400 
-                                   transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
-                                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
-                                   peer-placeholder-shown:text-metal-500 
-                                   peer-focus:top-0 peer-focus:text-xs 
-                                   peer-focus:text-accent-500 transition-all duration-300">
-                                Email Address
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="relative group">
-                        <input 
-                            type="text" 
-                            name="subject" 
-                            id="subject" 
-                            required 
-                            class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
-                                   focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
-                                   transition duration-300 ease-in-out"
-                            placeholder=" "
-                        >
-                        <label for="subject" class="absolute left-4 top-0 text-metal-400 
-                               transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
-                               peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
-                               peer-placeholder-shown:text-metal-500 
-                               peer-focus:top-0 peer-focus:text-xs 
-                               peer-focus:text-accent-500 transition-all duration-300">
-                            Subject
-                        </label>
-                    </div>
-                    
-                    <div class="relative group">
-                        <textarea 
-                            name="message" 
-                            id="message" 
-                            rows="5" 
-                            required 
-                            class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
-                                   focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
-                                   transition duration-300 ease-in-out resize-none"
-                            placeholder=" "
-                        ></textarea>
-                        <label for="message" class="absolute left-4 top-0 text-metal-400 
-                               transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
-                               peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
-                               peer-placeholder-shown:text-metal-500 
-                               peer-focus:top-0 peer-focus:text-xs 
-                               peer-focus:text-accent-500 transition-all duration-300">
-                            Your Message
-                        </label>
-                    </div>
-                    
-                    <button 
-                        type="submit" 
-                        class="w-full bg-gradient-to-r from-accent-500 to-blue-400 text-primary-900 py-4 rounded-full 
-                               font-bold text-lg hover:from-accent-400 hover:to-blue-300 
-                               focus:outline-none focus:ring-4 focus:ring-accent-500/50 
-                               transform hover:scale-[1.02] transition duration-300 ease-in-out"
-                    >
-                        Send Message
-                    </button>
-                </form>
+                <!-- Replace just the form section in your template -->
+<form method="post" class="space-y-8" data-aos="fade-up">
+    {% csrf_token %}
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="relative group">
+            <input 
+                type="text" 
+                name="name" 
+                id="{{ form.name.id_for_label }}"
+                required 
+                class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                       focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                       transition duration-300 ease-in-out"
+                placeholder=" "
+            >
+            <label for="{{ form.name.id_for_label }}" class="absolute left-4 top-0 text-metal-400 
+                   transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+                   peer-placeholder-shown:text-metal-500 
+                   peer-focus:top-0 peer-focus:text-xs 
+                   peer-focus:text-accent-500 transition-all duration-300">
+                Full Name
+            </label>
+        </div>
+        
+        <div class="relative group">
+            <input 
+                type="email" 
+                name="email" 
+                id="{{ form.email.id_for_label }}"
+                required 
+                class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                       focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                       transition duration-300 ease-in-out"
+                placeholder=" "
+            >
+            <label for="{{ form.email.id_for_label }}" class="absolute left-4 top-0 text-metal-400 
+                   transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+                   peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+                   peer-placeholder-shown:text-metal-500 
+                   peer-focus:top-0 peer-focus:text-xs 
+                   peer-focus:text-accent-500 transition-all duration-300">
+                Email Address
+            </label>
+        </div>
+    </div>
+    
+    <div class="relative group">
+        <input 
+            type="text" 
+            name="subject" 
+            id="{{ form.subject.id_for_label }}"
+            required 
+            class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                   focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                   transition duration-300 ease-in-out"
+            placeholder=" "
+        >
+        <label for="{{ form.subject.id_for_label }}" class="absolute left-4 top-0 text-metal-400 
+               transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+               peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+               peer-placeholder-shown:text-metal-500 
+               peer-focus:top-0 peer-focus:text-xs 
+               peer-focus:text-accent-500 transition-all duration-300">
+            Subject
+        </label>
+    </div>
+    
+    <div class="relative group">
+        <textarea 
+            name="message" 
+            id="{{ form.message.id_for_label }}"
+            rows="4" 
+            required 
+            class="peer w-full bg-primary-900 border border-metal-500/30 rounded-xl px-4 py-3 text-gray-100 
+                   focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-500/30 
+                   transition duration-300 ease-in-out resize-none"
+            placeholder=" "
+        ></textarea>
+        <label for="{{ form.message.id_for_label }}" class="absolute left-4 top-0 text-metal-400 
+               transform -translate-y-1/2 bg-primary-800 px-1 text-xs 
+               peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base 
+               peer-placeholder-shown:text-metal-500 
+               peer-focus:top-0 peer-focus:text-xs 
+               peer-focus:text-accent-500 transition-all duration-300">
+            Your Message
+        </label>
+    </div>
+    
+    <button type="submit" class="w-full bg-gradient-to-r from-accent-500 to-blue-400 text-primary-900 py-4 rounded-full 
+           font-bold text-lg hover:from-accent-400 hover:to-blue-300 
+           focus:outline-none focus:ring-4 focus:ring-accent-500/50 
+           transform hover:scale-[1.02] transition duration-300 ease-in-out">
+        Send Message
+    </button>
+</form>
+
+                
+                
+
             </div>
 
             <!-- Contact Information -->
